@@ -103,7 +103,7 @@ Terakhir, dua grafik metrics/mAP50(B) dan metrics/mAP50-95(B) menunjukkan pertum
 
 Untuk hasil Inferensi pada video, dapat dilihat pada video berikut:
 
-![video](output_video.mp4)
+https://github.com/user-attachments/assets/cb073f4e-7900-4601-802e-bf1e224b8590
 
 Kelompok 5 :
 - Zoni Aryantoni Albab (G1A022043)
