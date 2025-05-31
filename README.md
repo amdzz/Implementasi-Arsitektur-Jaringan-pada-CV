@@ -17,7 +17,7 @@ Model yang digunakan dalam implementasi pertama dibangun menggunakan arsitektur 
 
 Setelah fitur diekstraksi, layer Flatten digunakan untuk mengubah hasil konvolusi menjadi vektor satu dimensi, yang kemudian diproses oleh dua layer dense (fully connected) masing-masing dengan 256 dan 128 unit. Dropout diterapkan pada kedua layer ini untuk mengurangi risiko overfitting, dengan dropout rate masing-masing 0.5 dan 0.3. Terakhir, output layer terdiri dari satu neuron dengan aktivasi sigmoid, karena kasus ini merupakan klasifikasi biner antara citra bertulang Normal dan Patah. Model dikompilasi menggunakan optimizer Adam dengan learning rate yang relatif kecil (0.00009), menggunakan fungsi loss binary_crossentropy dan metrik akurasi. Pemilihan hyperparameter ini dilakukan dengan pertimbangan agar model dapat belajar secara stabil dan optimal terhadap dataset medis yang umumnya memiliki ukuran terbatas namun sangat penting akurasinya.
 
-#### Hasil
+### Hasil
 
 ![image](https://github.com/user-attachments/assets/861d5463-ad97-4d7b-9b2c-eae3b854becb)
 
@@ -27,7 +27,7 @@ Pada grafik Training vs Validation Accuracy, terlihat bahwa akurasi model pada d
 
 Secara keseluruhan, model mencapai akurasi sebesar 90% pada data uji yang terdiri dari total 506 sampel. Nilai macro average dan weighted average untuk precision, recall, dan f1-score semuanya berada di angka 0.90–0.91, mengindikasikan bahwa model memiliki performa yang konsisten dan seimbang di kedua kelas, tanpa bias berlebihan terhadap satu kelas tertentu.
 
-#### Inferensi
+### Inferensi
 
 ![image](https://github.com/user-attachments/assets/1b97b5bb-01ad-471d-8215-0a7d91ea5714)
 
@@ -40,7 +40,7 @@ Pada tahap ini, arsitektur VGG16 digunakan sebagai dasar model klasifikasi citra
 
 Model kemudian di-compile menggunakan Adam optimizer dengan learning rate yang kecil (0.00009) agar pelatihan berlangsung stabil. Loss function yang digunakan adalah binary crossentropy, yang sesuai untuk klasifikasi dua kelas. Model ini juga mengunci semua bobot dari VGG16 bawaan (base_model.trainable = False) agar hanya classifier baru yang dilatih, sehingga menghemat waktu komputasi dan memanfaatkan fitur-fitur visual yang sudah dipelajari oleh VGG16 sebelumnya.
 
-#### Hasil
+### Hasil
 
 ![image](https://github.com/user-attachments/assets/db238e52-f137-4907-b7e3-0bcbc52c6464)
 
@@ -50,7 +50,7 @@ Pada grafik akurasi (kiri), terlihat bahwa akurasi pelatihan meningkat tajam hin
 
 Secara keseluruhan, model mencetak akurasi total sebesar 0.99 atau 99%, yang berarti hanya sedikit kesalahan klasifikasi dari total 506 data uji. Nilai rata-rata (macro dan weighted average) untuk precision, recall, dan f1-score semuanya berada pada angka 0.99, mencerminkan konsistensi performa model di seluruh kelas. Dengan performa setinggi ini, dapat disimpulkan bahwa model VGG16 yang digunakan telah melakukan generalisasi dengan sangat baik dan layak digunakan untuk tugas klasifikasi citra X-ray patah tulang.
 
-#### Inferensi
+### Inferensi
 
 ![image](https://github.com/user-attachments/assets/de8961ec-1670-4f9c-8d15-3952561acb66)
 
@@ -64,7 +64,7 @@ Arsitektur ResNet50 yang diimplementasikan menggunakan pendekatan transfer learn
 Model ini dikompilasi menggunakan optimizer Adam dengan learning rate yang kecil (0.00009), untuk memastikan proses pelatihan berlangsung stabil, dengan fungsi loss binary_crossentropy yang sesuai untuk klasifikasi biner. Secara keseluruhan, arsitektur ini menggabungkan kekuatan representasi fitur dari ResNet50 dengan fleksibilitas lapisan dense untuk menyesuaikan model dengan dataset X-ray yang digunakan.
 
 
-#### Hasil
+### Hasil
 
 ![image](https://github.com/user-attachments/assets/0817c777-15fc-48bf-ab99-39e720602302)
 
@@ -74,7 +74,7 @@ Pada grafik akurasi, terlihat bahwa akurasi pelatihan mengalami peningkatan yang
 
 Secara keseluruhan, akurasi model mencapai 0.71 atau 71%, artinya dari total 506 sampel, 71% diklasifikasikan dengan benar. macro average untuk precision, recall, dan f1-score adalah masing-masing 0.72, 0.71, dan 0.71. Rata-rata ini memberi bobot yang sama untuk setiap kelas tanpa memperhatikan ukuran kelas. Sementara itu, weighted average juga menghasilkan nilai yang sama, mencerminkan bahwa distribusi jumlah sampel antar kelas relatif seimbang. Dengan demikian, model menunjukkan performa yang cukup baik secara keseluruhan, meskipun masih terdapat ruang perbaikan khususnya dalam meningkatkan recall untuk kelas fractured, yang sangat penting dalam konteks deteksi kondisi medis seperti patah tulang.
 
-#### Inferensi
+### Inferensi
 
 ![image](https://github.com/user-attachments/assets/373c899c-48fa-4ce9-bc4f-67a8112fdfdb)
 
@@ -87,7 +87,7 @@ Pada bagian ini dilakukan implementasi arsitektur YOLOv11, yaitu versi terbaru d
 
 Dalam implementasi ini, model diinisialisasi dengan memuat bobot dari pre-trained model yolo11m.pt, yang merupakan varian medium dari YOLOv11 dengan keseimbangan antara ukuran dan performa. Model kemudian dilatih menggunakan dataset yang telah dikonfigurasi melalui file data.yaml, yang mendeskripsikan jalur data dan label kelas. Parameter pelatihan disesuaikan untuk keperluan eksperimen, di antaranya jumlah epoch sebanyak 10, ukuran gambar 640 piksel, dan batch size 16. Proses pelatihan dilakukan menggunakan GPU agar lebih efisien dan cepat, dengan mekanisme early stopping menggunakan parameter patience=5, yaitu menghentikan pelatihan lebih awal jika tidak terjadi peningkatan selama 5 epoch berturut-turut. Hasil pelatihan disimpan pada folder proyek runs/train dengan nama eksperimen exp.
 
-#### Hasil
+### Hasil
 
 ![image](https://github.com/user-attachments/assets/45009411-627a-4af3-93cd-1ec6d001d1ff)
 
@@ -97,7 +97,7 @@ Grafik metrik precision(B) dan recall(B) menunjukkan peningkatan yang jelas, den
 
 Terakhir, dua grafik metrics/mAP50(B) dan metrics/mAP50-95(B) menunjukkan pertumbuhan signifikan. Nilai mAP50 meningkat hingga hampir 0.8, sementara mAP50-95 mencapai lebih dari 0.45. Ini menunjukkan bahwa model semakin baik dalam mendeteksi objek dengan akurasi tinggi dalam berbagai kondisi threshold Intersection over Union (IoU). Secara keseluruhan, grafik-grafik ini menunjukkan bahwa proses pelatihan model YOLOv11 berjalan dengan baik dan konsisten, dengan peningkatan performa pada semua aspek utama, baik pada data pelatihan maupun validasi. Tidak tampak adanya overfitting yang signifikan, dan model berhasil mencapai hasil deteksi yang cukup menjanjikan.
 
-#### Inferensi
+### Inferensi
 
 ![image](https://github.com/user-attachments/assets/c278530f-f54d-4ec6-9791-62bbd8cd4644)
 
